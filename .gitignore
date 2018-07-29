@@ -1,1 +1,4 @@
-$GIT_DIR/Debug
+**/Debug
+**/x64
+**/Tactics/Debug
+**/Tactics/x64
