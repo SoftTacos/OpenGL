@@ -145,8 +145,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);//used this without index buffering
-		glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);//&ibo); //////GL_UNSIGNED_INT
-
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);//&ibo);
 		//vertex in openGL can contain way more than just position data, position, texture coords, normals, etc.
 		
 
