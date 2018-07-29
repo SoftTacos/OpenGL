@@ -151,6 +151,9 @@
     <Text Include="Dependencies\GLEW\GLEW 2.1.0.txt" />
     <Text Include="Dependencies\GLEW\LICENSE.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\Basic.shader" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

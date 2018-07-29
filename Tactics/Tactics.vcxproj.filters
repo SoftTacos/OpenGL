@@ -47,4 +47,7 @@
     <Text Include="Dependencies\GLEW\LICENSE.txt" />
     <Text Include="Dependencies\GLEW\GLEW 2.1.0.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\Basic.shader" />
+  </ItemGroup>
 </Project>
