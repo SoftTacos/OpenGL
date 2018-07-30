@@ -1,9 +1,9 @@
 #pragma once
-//#define GLEW_STATIC
 
 #include <time.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <rapidxml.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,6 +11,24 @@
 
 #include "headers/GameMap.h"
 #include "headers/Tile.h"
+
+//ez error checking want the program to break as soon as there is a GL error, might cause scoping issues later but works for now until I learn how to callback error handling in OpenGL
+#define ASSERT(x) if (!(x)) __debugbreak();
+#define GLCall(x) GLClearError();\
+	x;\
+	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+
+static void GLClearError() {
+	while (glGetError() != GL_NO_ERROR);//easier to read
+}
+
+static bool GLLogCall(const char* function, const char* file, int line) {
+	while (GLenum error = glGetError()) {
+		std::cout << "OpenGL ERROR: " << error << function << ": " << file << ":" << line << std::endl;
+		return false;
+	}//TODO: convert the hexdec error code into english, this information is in glew.h
+	return true;
+}
 
 std::string LoadTextFile(std::string filepath) {
 	std::ifstream stream(filepath);
@@ -168,10 +186,12 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
+		//GLClearError();
 		//glDrawArrays(GL_TRIANGLES, 0, 6);//used this without index buffering
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);//&ibo);
+		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));//&ibo);
 		//vertex in openGL can contain way more than just position data, position, texture coords, normals, etc.
-		
+		//ASSERT(GLLogCall());
+
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
