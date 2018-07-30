@@ -9,20 +9,35 @@
 #include <string>
 #include <sstream>
 
+#include "headers/GameMap.h"
+#include "headers/Tile.h"
+
+std::string LoadTextFile(std::string filepath) {
+	std::ifstream stream(filepath);
+	if (!stream) {
+		std::cout << "Unable to open file";
+		exit(1); // terminate with error
+	}
+	std::string content((std::istreambuf_iterator<char>(stream)), (std::istreambuf_iterator<char>()));
+	stream.close();
+	return content;
+}
+
 struct ShaderProgramSource {
 	std::string VertexSource;
 	std::string FragmentSource;
 };
 
 static ShaderProgramSource ParseShader(const std::string& filepath) {
-	std::ifstream stream(filepath);
-	std::string line;
-	std::stringstream ss[2];
-
 	enum class ShaderType {
 		NONE = -1, VERTEX = 0, FRAGMENT = 1
 	};
 	ShaderType type = ShaderType::NONE;
+	
+	std::ifstream stream(filepath);
+	std::string line;
+	std::stringstream ss[2];
+
 	while (getline(stream, line)) {
 		if (line.find("#shader") != std::string::npos) {
 			if (line.find("#shader_vertex") != std::string::npos) {
@@ -80,14 +95,23 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 int main(void)
 {
-    GLFWwindow* window;
+	//just doing object testing here as I add new stuff
+	GameMap testMap = GameMap();
+	Tile testTile = Tile();
+	//want to read in a map file, using rapidxml
+	
+	std::string tileTypes = LoadTextFile("res/types/tileTypes");
+
+	std::cout << tileTypes << std::endl;
+	
+	GLFWwindow* window;
 
 	/* Initialize the library */
     if (!glfwInit())
         return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 960, "", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -104,7 +128,7 @@ int main(void)
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	float positions[] = { 
-		-0.5f, -0.5f,
+		-1.0f, -1.0f,//-0.5f, -0.5f,
 		0.5f, -0.5f,
 		0.5f, 0.5f,
 		

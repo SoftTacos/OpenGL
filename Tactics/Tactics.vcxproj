@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include;$(ProjectDir)Dependencies\RAPIDXML</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include;$(ProjectDir)Dependencies\RAPIDXML</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -139,6 +139,12 @@
     <ClInclude Include="Dependencies\GLEW\include\GL\wglew.h" />
     <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Dependencies\RAPIDXML\rapidxml.hpp" />
+    <ClInclude Include="Dependencies\RAPIDXML\rapidxml_iterators.hpp" />
+    <ClInclude Include="Dependencies\RAPIDXML\rapidxml_print.hpp" />
+    <ClInclude Include="Dependencies\RAPIDXML\rapidxml_utils.hpp" />
+    <ClInclude Include="src\headers\GameMap.h" />
+    <ClInclude Include="src\headers\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLEW\lib\Release\x64\glew32s.lib" />
@@ -146,13 +152,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\src\GameMap.cpp" />
+    <ClCompile Include="src\src\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\GLEW\GLEW 2.1.0.txt" />
     <Text Include="Dependencies\GLEW\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\maps\testMap" />
     <None Include="res\shaders\Basic.shader" />
+    <None Include="res\types\tileTypes" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
