@@ -9,7 +9,9 @@ void main(){
 #shader_fragment
 #version 330 core//probably use 450 later
 
+uniform vec4 u_Color;
+
 layout(location = 0) out vec4 color;
 void main(){
-	color = vec4(1.0, 0.1, 0.1, 1.0);//RGBA
+	color = u_Color;//vec4(1.0, 0.1, 0.1, 1.0);//RGBA
 };

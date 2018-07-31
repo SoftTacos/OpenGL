@@ -138,7 +138,7 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
+	glfwSwapInterval(1);//synchronizes the framerate with our refresh rate, neat.
 	if (GLEW_OK != glewInit())
 		std::cout << "ERR";
 
@@ -163,7 +163,7 @@ int main(void)
 	unsigned int buffer1;
 	glGenBuffers(1, &buffer1);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer1);
-	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
 	//http://docs.gl/gl4/glVertexAttribPointer
 	//stride is number of bytes between the vertices, going to have to know how many bytes are in each vertex
@@ -173,7 +173,7 @@ int main(void)
 	unsigned int ibo;
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 	//shader stuff
 	ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
@@ -181,16 +181,23 @@ int main(void)
 	unsigned int shader1 = CreateShader(source.VertexSource,source.FragmentSource);
 	glUseProgram(shader1);
 
+	//OPENGL Uniforms, basically passing in variables to a shader
+	//get "location" of the variable
+	//can specify location of variable with newer versions of OGL
+	int location = glGetUniformLocation(shader1, "u_Color");
+	ASSERT(location != -1);//might not leave this here, just ez check, might still be -1 if u_Color doesn't actually get used
+	glUniform4f(location, 0.2f, 0.5f, 0.8f, 0.8f);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)){
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-		//GLClearError();
+		//glUniform4f(location, x,y,z,a);//can use this to pass stuff in, not using it but leaving it in as a reminder
+		//GlCall is used for debugging, basically wrap any function in it in order to get GL errors. hurts readability so I'm only going to use it where errors are more likely for now
 		//glDrawArrays(GL_TRIANGLES, 0, 6);//used this without index buffering
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));//&ibo);
 		//vertex in openGL can contain way more than just position data, position, texture coords, normals, etc.
-		//ASSERT(GLLogCall());
 
 
         /* Swap front and back buffers */
